@@ -1,36 +1,24 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Mouse Coordinates Tracker</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'web/css/style.css' %}">
 </head>
 <body>
 
-<h1>Mouse Coordinates</h1>
-<p id="coordinates">X: , Y: </p>
+<div class="container">
+    <h1>Mouse Coordinates Tracker</h1>
+    <div class="coordinates">
+        <p id="coordinates"></p>
+    </div>
+    <p id="saved-coordinates"></p>
+</div>
 
-<script>
-    let url = `ws://${window.location.host}/ws/socket-server/`
-
-    const socket = new WebSocket(url);
-
-    socket.onmessage = function (event) {
-        event.preventDefault()
-        let data = JSON.parse(event.data)
-        console.log('Data:', data);
-    };
-
-
-    // Function to update mouse coordinates
-    function updateCoordinates(event) {
-        let x = event.clientX;
-        let y = event.clientY;
-        document.getElementById('coordinates').innerText = `X: ${x}, Y: ${y}`;
-    }
-
-    // Add event listener for mousemove event
-    document.addEventListener('mousemove', updateCoordinates);
-</script>
+<script src="{% static 'web/js/track_coordinates.js' %}"></script>
+<script>window.onload = webSocketConnection;</script>
 
 </body>
 </html>
