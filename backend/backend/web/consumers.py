@@ -1,18 +1,21 @@
 import json
-from channels.generic.websocket import WebsocketConsumer
+from channels.generic.websocket import AsyncWebsocketConsumer
 
 
-class DataConsumer(WebsocketConsumer):
-    def connect(self):
-        self.accept()
+class DataConsumer(AsyncWebsocketConsumer):
+    async def connect(self):
+        await self.accept()
+        text_data = json.dumps({'message': 'Connection established!'})
+        await self.send(text_data)
 
-        message = 'Connection established'
-        self.send(text_data=json.dumps({'message': message}))
+    async def disconnect(self, close_code):
+        pass
 
-    # def disconnect(self, close_code):
-    #     pass
-    #
-    # def receive(self, text_data):
-    #     text_data_json = json.loads(text_data)
-    #     message = text_data_json['message']
-    #     self.send(text_data=json.dumps({'message': message}))
+    async def receive(self, text_data):
+        data_json = json.loads(text_data)
+        clicked_x = data_json['clicked_x']
+        clicked_y = data_json['clicked_y']
+        print(clicked_x)
+        print(clicked_y)
+        # TODO: save the data into a model with web cam image!
+        await self.send(text_data=json.dumps({'message': 'received coordinates'}))
