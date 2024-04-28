@@ -8,8 +8,11 @@ function webSocketConnection() {
     socket.onmessage = function (event) {
         event.preventDefault();
 
-        const data = JSON.parse(event.data);
-        console.log('Data:', data.message);
+        const eventData = JSON.parse(event.data);
+
+        if (eventData['image_url']) {
+            displayImage(eventData['image_url']);
+        }
     };
 
     function updateCoordinates(event) {
@@ -35,6 +38,16 @@ function webSocketConnection() {
             clicked_x: clicked_x,
             clicked_y: clicked_y,
         }));
+    }
+
+    function displayImage(imageUrl) {
+        const imageContainer = document.getElementById('image-container');
+        const imgElement = document.createElement('img');
+
+        imageContainer.innerHTML = '';
+        imgElement.src = imageUrl;
+        imgElement.alt = 'Captured Image';
+        imageContainer.appendChild(imgElement);
     }
 }
 
