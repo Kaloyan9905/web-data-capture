@@ -4,7 +4,7 @@
 
 1. Clone the repository.
 2. Make sure you have Python and Node.js installed on your system.
-3. Navigate to the backend folder using the following path: `\web-data-capture\backend`.
+3. Navigate to the backend folder and your terminal should look like this: `\web-data-capture\backend`.
 4. Install all requirements by running the following command:
    
     ```
